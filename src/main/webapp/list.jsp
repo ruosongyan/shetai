@@ -344,7 +344,7 @@
 		       
 				$("#table_id").on("click",".detail",function(){
 					var id = $(this).data("id");
-					openDialogView('查看大气站监测因子详情', '${ctx}/sys/sysAirStationFactor/form?id=' + id, '40%', '70%');
+					openDialogView('查看大气站监测因子详情', '${ctx}/sys/sysAirStationFactor/form?pid=' + id, '40%', '70%');
 				})
 		})
 	</script>

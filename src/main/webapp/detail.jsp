@@ -50,7 +50,7 @@
           </a>
           <ul class="sidenav-second-level collapse" id="collapseComponents">
             <li>
-              <a href="navbar.html">申请诊断</a>
+              <a href="appoint.jsp">申请诊断</a>
             </li>
             <li>
               <a href="list.jsp">诊断记录</a>
@@ -300,13 +300,14 @@
 	<script>
 		$(document).ready(function(){
 			$('#reply').click(function(){
-				val display=$(this).parent().next().css('display');
-				console.log(display);
-				if(display!="none"){
-					$(this).parent().next().css('display','none');
-				}else{
-					$(this).parent().next().css('display','block');
-				}
+				//val display=$(this);
+				console.log($(this).tagName);
+				//console.log(display);
+				//if(display!="none"){
+				//	$(this).parent().next().css('display','none');
+				//}else{
+				//	$(this).parent().next().css('display','block');
+				//}
 			})
 			
 			
@@ -317,18 +318,20 @@
 	  	  		        message:'内容不能为空',
 	  	  		        type:'error'
 	  	  		    });
+				}else{
+					$.ajax({  
+	                    type : "POST",  //提交方式  
+	                    url : "sendMessage",//路径  
+	                    data : {  
+	                        "content" : content,
+	                        
+	                    },
+	                    success : function(result) {//返回数据根据结果进行相应的处理  
+	                    	
+	                    }  
+	                });
 				}
-				$.ajax({  
-                    type : "POST",  //提交方式  
-                    url : "sendMessage",//路径  
-                    data : {  
-                        "content" : content,
-                        
-                    },
-                    success : function(result) {//返回数据根据结果进行相应的处理  
-                          
-                    }  
-                });
+				
 			})
 		})
 	</script>
