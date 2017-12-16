@@ -233,7 +233,7 @@
 		              <div class="control-group">
 		                <div class="form-group floating-label-form-group controls mb-0 pb-2">
 		                  <label>姓名</label>
-		                  <input class="form-control" id="name" type="text" placeholder="姓名" required="required" data-validation-required-message="Please enter your name.">
+		                  <input class="form-control" id="name" type="text" value="${name}" placeholder="姓名" required="required" data-validation-required-message="请输入你的姓名.">
 		                  <p class="help-block text-danger"></p>
 		                </div>
 		              </div>
@@ -252,28 +252,28 @@
 		              <div class="control-group">
 		                <div class="form-group floating-label-form-group controls mb-0 pb-2">
 		                  <label>年龄</label>
-		                  <input class="form-control" id="phone" type="tel" placeholder="年龄" required="required" data-validation-required-message="Please enter your phone number.">
+		                  <input class="form-control" id="phone" type="tel" placeholder="年龄" required="required" data-validation-required-message="请输入你的年龄.">
 		                  <p class="help-block text-danger"></p>
 		                </div>
 		              </div>
 		              <div class="control-group">
 		                <div class="form-group floating-label-form-group controls mb-0 pb-2">
 		                  <label>病史</label>
-		                  <textarea class="form-control" id="message" rows="5" placeholder="病史" required="required" data-validation-required-message="Please enter a message."></textarea>
+		                  <textarea class="form-control" id="message" rows="5" placeholder="病史" required="required" data-validation-required-message="请输入你的病史."></textarea>
 		                  <p class="help-block text-danger"></p>
 		                </div>
 		              </div>
 		              <div class="control-group">
 		                <div class="form-group floating-label-form-group controls mb-0 pb-2">
 		                  <label>最近不舒服的症状</label>
-		                  <textarea class="form-control" id="message" rows="5" placeholder="最近不舒服的症状" required="required" data-validation-required-message="Please enter a message."></textarea>
+		                  <textarea class="form-control" id="message" rows="5" placeholder="最近不舒服的症状" required="required" data-validation-required-message="请输入你的不舒服的症状."></textarea>
 		                  <p class="help-block text-danger"></p>
 		                </div>
 		              </div>
 		              <br>
 		              <div id="success"></div>
 		              <div class="form-group">
-		                <button type="submit" class="btn btn-primary btn-xl" id="sendMessageButton">Send</button>
+		                <button type="submit" class="btn btn-primary btn-xl" id="sendMessageButton">保存</button>
 		              </div>
 		            </form>
 		          </div>

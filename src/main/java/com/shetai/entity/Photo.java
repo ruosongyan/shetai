@@ -15,9 +15,9 @@ public class Photo {
 	private String did;		//医生id
 	private String tid;		//照片对应症状类型id（刚上传时为空，由医生判定类别后添加）
 	private String position;
-	private int photo_type;
+	private Integer photo_type;
 	private Date upload_date;
-	private int time;		//时间段
+	private Integer time;		//时间段
 	public String getPid() {
 		return pid;
 	}
@@ -48,10 +48,10 @@ public class Photo {
 	public void setPosition(String position) {
 		this.position = position;
 	}
-	public int getPhoto_type() {
+	public Integer getPhoto_type() {
 		return photo_type;
 	}
-	public void setPhoto_type(int photo_type) {
+	public void setPhoto_type(Integer photo_type) {
 		this.photo_type = photo_type;
 	}
 	public Date getUpload_date() {
@@ -60,10 +60,10 @@ public class Photo {
 	public void setUpload_date(Date upload_date) {
 		this.upload_date = upload_date;
 	}
-	public int getTime() {
+	public Integer getTime() {
 		return time;
 	}
-	public void setTime(int time) {
+	public void setTime(Integer time) {
 		this.time = time;
 	}
 }

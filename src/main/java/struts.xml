@@ -10,10 +10,27 @@
 	
 	<constant name="struts.devMode" value="true" /> 
     
-    <package name="homework" namespace="/" extends="struts-default">
-        <action name="test" class="com.shetai.web.TestAction">
-            <result name="success">/index.jsp </result>
+    <package name="login" namespace="/" extends="struts-default,json-default">
+        <action name="" class="com.shetai.web.LoginAction">
+            <result name="success">/login.jsp </result>
             <result name="fail">/test.jsp </result>
+        </action>
+        
+        <action name="login" class="com.shetai.web.LoginAction" method="login">
+            <result name="success" type="chain">info</result>
+            <result name="fail">/error.jsp </result>
+        </action>
+        
+        <action name="register" class="com.shetai.web.LoginAction" method="register">
+            <result name="success">/login.jsp</result>
+            <result name="fail">/error.jsp </result>
+        </action>
+    </package> 
+    
+    <package name="info" namespace="/" extends="struts-default">
+        <action name="info" class="com.shetai.web.InfoAction">
+            <result name="success">/info.jsp </result>
+            <result name="fail"></result>
         </action>
     </package>  
     

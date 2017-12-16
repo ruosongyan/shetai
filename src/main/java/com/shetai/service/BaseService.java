@@ -12,4 +12,6 @@ public interface BaseService<E extends BaseDaoImpl<T>,T>{
 	public boolean update(T entity);
 	
 	public List<T> query(String table);
+	
+	public List<T> query(String table,T entity);
 }

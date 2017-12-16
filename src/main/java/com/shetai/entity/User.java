@@ -10,11 +10,11 @@ public class User {
 	@Id
 	private String uid;
 	private String uname;
-	private int gender;
-	private int age;
+	private Integer gender;
+	private Integer age;
 	private String medical_history;
 	private String symptom;
-	private int type;      //用户类型（0表示用户，1表示医生）
+	private Integer type;      //用户类型（0表示用户，1表示医生）
 	private String account;
 	private String passwd;
 	
@@ -30,16 +30,16 @@ public class User {
 	public void setUname(String uname) {
 		this.uname = uname;
 	}
-	public int getGender() {
+	public Integer getGender() {
 		return gender;
 	}
-	public void setGender(int gender) {
+	public void setGender(Integer gender) {
 		this.gender = gender;
 	}
-	public int getAge() {
+	public Integer getAge() {
 		return age;
 	}
-	public void setAge(int age) {
+	public void setAge(Integer age) {
 		this.age = age;
 	}
 	public String getMedical_history() {
@@ -65,5 +65,11 @@ public class User {
 	}
 	public void setPasswd(String passwd) {
 		this.passwd = passwd;
+	}
+	public Integer getType() {
+		return type;
+	}
+	public void setType(Integer type) {
+		this.type = type;
 	}
 }

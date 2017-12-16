@@ -1,5 +1,6 @@
 package com.shetai.dao.impl;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +17,7 @@ import com.shetai.entity.User;
 @Repository
 public class BaseDaoImpl<E> implements BaseDao<E>{
 	@Autowired
-	private SessionFactory sessionFactory;
+	protected SessionFactory sessionFactory;
 	
 	public boolean add(E entity) {
         Session session=sessionFactory.openSession();  
@@ -72,6 +73,42 @@ public class BaseDaoImpl<E> implements BaseDao<E>{
 		Query query = session.createQuery(hql);
 		session.close();
 		return query.list(); 
+	}
+	
+	public List<E> query(String table,E entity){
+		Session session=null;
+		try {
+			session=sessionFactory.openSession();   
+	    	String hql="from "+table+" where ";
+	    	Class ecla=entity.getClass();
+			Field[] fs=ecla.getDeclaredFields();
+			for(int i=0;i<fs.length-1;i++) {
+	        	Field f = fs[i];  
+		        f.setAccessible(true);
+				Object val = f.get(entity);
+				String value=f.getName();
+				String type = f.getType().toString();
+				if(val!=null) {
+					if(type.endsWith("String")) {
+						hql+=(value+"='"+val.toString()+"' and ");
+					}else {
+						hql+=(value+"="+val.toString()+" and ");
+					}
+				}
+			}
+			hql=hql.replaceAll(" and $", "");
+			Query query = session.createQuery(hql);
+			return query.list(); 
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			session.close();
+		}
+		return null;
 	}
 	
 	public E query(String table,String id){

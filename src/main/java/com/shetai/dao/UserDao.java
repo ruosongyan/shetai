@@ -1,5 +1,7 @@
 package com.shetai.dao;
 
-public interface UserDao {
+import com.shetai.entity.User;
 
+public interface UserDao {
+	public boolean queryByLoginInfo(User user);
 }
