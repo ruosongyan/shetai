@@ -24,6 +24,8 @@
   <link href="<%= request.getContextPath() %>/staticfile/vendor/magnific-popup/magnific-popup.css" rel="stylesheet" type="text/css">
   <!-- Custom styles for this template -->
   <link href="<%= request.getContextPath() %>/staticfile/css/freelancer.css" rel="stylesheet">
+  <link href="<%= request.getContextPath() %>/staticfile/css/detail.css" rel="stylesheet">
+  <link href="<%= request.getContextPath() %>/staticfile/css/message.css" rel="stylesheet">
 </head>
 
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
@@ -220,66 +222,26 @@
   <div class="content-wrapper">
     <div class="container-fluid">
 		<div class="container">
-			<div style="float:left">
-				<img class="img-fluid mb-5 d-block mx-auto" src="<%= request.getContextPath() %>/staticfile/img/profile.png" alt="">
-			    <h2 class="text-center text-uppercase text-secondary mb-0">个人信息</h2>
-		        <hr class="star-dark mb-5">
-			</div>
-	        <div style="float:left;width:600px;">
-	        	<div class="row">
-		          <div class="col-lg-8 mx-auto">
-		            <!-- The form should work on most web servers, but if the form is not working you may need to configure your web server differently. -->
-		            <form name="sentMessage" id="contactForm" novalidate="novalidate">
-		              <div class="control-group">
-		                <div class="form-group floating-label-form-group controls mb-0 pb-2">
-		                  <label>姓名</label>
-		                  <input class="form-control" id="name" type="text" value="${name}" placeholder="姓名" required="required" data-validation-required-message="请输入你的姓名.">
-		                  <p class="help-block text-danger"></p>
-		                </div>
-		              </div>
-		              <div class="control-group">
-		                <div class="form-group controls mb-0 pb-2 radio-form-group">
-		                  <label>性别</label>
-	                      <label class="radio-inline">
-	                          <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline1" value="0" checked>男
-	                      </label>
-	                      <label class="radio-inline">
-	                          <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline2" value="1">女
-	                      </label>
-		                  <p class="help-block text-danger"></p>
-		                </div>
-		              </div>
-		              <div class="control-group">
-		                <div class="form-group floating-label-form-group controls mb-0 pb-2">
-		                  <label>年龄</label>
-		                  <input class="form-control" id="phone" type="tel" placeholder="年龄" required="required" data-validation-required-message="请输入你的年龄.">
-		                  <p class="help-block text-danger"></p>
-		                </div>
-		              </div>
-		              <div class="control-group">
-		                <div class="form-group floating-label-form-group controls mb-0 pb-2">
-		                  <label>病史</label>
-		                  <textarea class="form-control" id="message" rows="5" placeholder="病史" required="required" data-validation-required-message="请输入你的病史."></textarea>
-		                  <p class="help-block text-danger"></p>
-		                </div>
-		              </div>
-		              <div class="control-group">
-		                <div class="form-group floating-label-form-group controls mb-0 pb-2">
-		                  <label>最近不舒服的症状</label>
-		                  <textarea class="form-control" id="message" rows="5" placeholder="最近不舒服的症状" required="required" data-validation-required-message="请输入你的不舒服的症状."></textarea>
-		                  <p class="help-block text-danger"></p>
-		                </div>
-		              </div>
-		              <br>
-		              <div id="success"></div>
-		              <div class="form-group">
-		                <button type="submit" class="btn btn-primary btn-xl" id="sendMessageButton">保存</button>
-		              </div>
-		            </form>
-		          </div>
-		        </div>
-	        </div>
-	        
+	        	<div class="message">
+					<div class="row1">
+						<div class="doctor">医生</div>
+						<div class="to">回复</div>
+						<div class="user">用户</div>
+					</div>
+					<div class="row2">You need more sleep and blu blu bludaf af adf adf adf adf adf adf asdf adsf asdf afffffffffffffffffffffffffffffffffff</div>
+					<div class="row3">
+						<div class="time">--2017-12-18--</div>
+						<div class="reply" id="reply">回复</div>
+					</div>
+					<div class="row4">
+						<div class="input-group">
+					      <input type="text" class="form-control" id="content" placeholder="请输入内容">
+					      <span class="input-group-btn">
+					        <button class="btn btn-success" id="send" type="button">发送</button>
+					      </span>
+					    </div>
+					</div>
+				</div>
 	    </div>
 	      
     </div>
@@ -334,7 +296,42 @@
     <!-- Contact Form JavaScript -->
     <script src="<%= request.getContextPath() %>/staticfile/js/jqBootstrapValidation.js"></script>
     <script src="<%= request.getContextPath() %>/staticfile/js/contact_me.js"></script>
-
+    <script src="<%= request.getContextPath() %>/staticfile/js/message.js"></script>
+	<script>
+		$(document).ready(function(){
+			$('#reply').click(function(){
+				val display=$(this).parent().next().css('display');
+				console.log(display);
+				if(display!="none"){
+					$(this).parent().next().css('display','none');
+				}else{
+					$(this).parent().next().css('display','block');
+				}
+			})
+			
+			
+			$('#send').click(function(){
+				val content = $('#content').val();
+				if(content==null || content==""){
+					$.message({
+	  	  		        message:'内容不能为空',
+	  	  		        type:'error'
+	  	  		    });
+				}
+				$.ajax({  
+                    type : "POST",  //提交方式  
+                    url : "sendMessage",//路径  
+                    data : {  
+                        "content" : content,
+                        
+                    },
+                    success : function(result) {//返回数据根据结果进行相应的处理  
+                          
+                    }  
+                });
+			})
+		})
+	</script>
   </div>
 </body>
 

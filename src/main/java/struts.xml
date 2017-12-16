@@ -32,6 +32,22 @@
             <result name="success">/info.jsp </result>
             <result name="fail"></result>
         </action>
-    </package>  
+    </package> 
+    
+    <package name="photo" namespace="/" extends="json-default">
+        <action name="photolist" class="com.shetai.web.PhotoAction">
+            <result  type="json">
+            	<param name="root">result</param>
+            </result>
+            <result name="fail">/error.jsp</result>
+        </action>
+        
+        <action name="sendMessage" class="com.shetai.web.PhotoAction" method="sendMessage">
+            <result  type="json">
+            	<param name="root">result</param>
+            </result>
+            <result name="fail">/error.jsp</result>
+        </action>
+    </package> 
     
 </struts>

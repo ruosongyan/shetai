@@ -24,6 +24,7 @@
   <link href="<%= request.getContextPath() %>/staticfile/vendor/magnific-popup/magnific-popup.css" rel="stylesheet" type="text/css">
   <!-- Custom styles for this template -->
   <link href="<%= request.getContextPath() %>/staticfile/css/freelancer.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/staticfile/css/jquery.dataTables.min.css">
 </head>
 
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
@@ -51,7 +52,7 @@
               <a href="navbar.html">申请诊断</a>
             </li>
             <li>
-              <a href="list.jsp">诊断记录</a>
+              <a href="cards.html">诊断记录</a>
             </li>
           </ul>
         </li>
@@ -220,67 +221,20 @@
   <div class="content-wrapper">
     <div class="container-fluid">
 		<div class="container">
-			<div style="float:left">
-				<img class="img-fluid mb-5 d-block mx-auto" src="<%= request.getContextPath() %>/staticfile/img/profile.png" alt="">
-			    <h2 class="text-center text-uppercase text-secondary mb-0">个人信息</h2>
-		        <hr class="star-dark mb-5">
-			</div>
-	        <div style="float:left;width:600px;">
-	        	<div class="row">
-		          <div class="col-lg-8 mx-auto">
-		            <!-- The form should work on most web servers, but if the form is not working you may need to configure your web server differently. -->
-		            <form name="sentMessage" id="contactForm" novalidate="novalidate">
-		              <div class="control-group">
-		                <div class="form-group floating-label-form-group controls mb-0 pb-2">
-		                  <label>姓名</label>
-		                  <input class="form-control" id="name" type="text" value="${name}" placeholder="姓名" required="required" data-validation-required-message="请输入你的姓名.">
-		                  <p class="help-block text-danger"></p>
-		                </div>
-		              </div>
-		              <div class="control-group">
-		                <div class="form-group controls mb-0 pb-2 radio-form-group">
-		                  <label>性别</label>
-	                      <label class="radio-inline">
-	                          <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline1" value="0" checked>男
-	                      </label>
-	                      <label class="radio-inline">
-	                          <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline2" value="1">女
-	                      </label>
-		                  <p class="help-block text-danger"></p>
-		                </div>
-		              </div>
-		              <div class="control-group">
-		                <div class="form-group floating-label-form-group controls mb-0 pb-2">
-		                  <label>年龄</label>
-		                  <input class="form-control" id="phone" type="tel" placeholder="年龄" required="required" data-validation-required-message="请输入你的年龄.">
-		                  <p class="help-block text-danger"></p>
-		                </div>
-		              </div>
-		              <div class="control-group">
-		                <div class="form-group floating-label-form-group controls mb-0 pb-2">
-		                  <label>病史</label>
-		                  <textarea class="form-control" id="message" rows="5" placeholder="病史" required="required" data-validation-required-message="请输入你的病史."></textarea>
-		                  <p class="help-block text-danger"></p>
-		                </div>
-		              </div>
-		              <div class="control-group">
-		                <div class="form-group floating-label-form-group controls mb-0 pb-2">
-		                  <label>最近不舒服的症状</label>
-		                  <textarea class="form-control" id="message" rows="5" placeholder="最近不舒服的症状" required="required" data-validation-required-message="请输入你的不舒服的症状."></textarea>
-		                  <p class="help-block text-danger"></p>
-		                </div>
-		              </div>
-		              <br>
-		              <div id="success"></div>
-		              <div class="form-group">
-		                <button type="submit" class="btn btn-primary btn-xl" id="sendMessageButton">保存</button>
-		              </div>
-		            </form>
-		          </div>
-		        </div>
-	        </div>
-	        
-	    </div>
+	        <table id="table_id" class="display">
+			    <thead>
+			    <tr>
+			        <th>#</th>
+			        <th>日期</th>
+			        <th>时间段</th>
+			        <th>分类</th>
+			        <th>操作</th>
+			    </tr>
+			    </thead>
+			    <tbody>
+			    </tbody>
+			</table>
+		</div>
 	      
     </div>
     <!-- /.container-fluid-->
@@ -334,7 +288,66 @@
     <!-- Contact Form JavaScript -->
     <script src="<%= request.getContextPath() %>/staticfile/js/jqBootstrapValidation.js"></script>
     <script src="<%= request.getContextPath() %>/staticfile/js/contact_me.js"></script>
-
+	<script type="text/javascript" charset="utf8" src="<%= request.getContextPath() %>/staticfile/js/jquery.dataTables.min.js"></script>
+	<script>
+		$(document).ready( function () {
+		       var tables=$('#table_id').DataTable({
+		    	   	dom: '<"top"f>rt<"bottom"ip><"clear">',
+					language: {
+						search: ""
+					},
+					iDisplayLength: 15,//分页大小
+		           "ajax":{
+		           	url: "photolist",
+					dataSrc: function(json) {
+						//处理返回数据
+						var obj= eval('(' + json + ')');
+						obj.forEach(function(item,index) {
+							item["index"] = index+1;
+		                    item["upload_date"] = item.upload_date;
+		                    switch(item.time){
+		                    case 0:
+		                    	item["time"]="早上";
+		                    	break;
+		                    case 1:
+		                    	item["time"]="中午";
+		                    	break;
+		                    case 2:
+		                    	item["time"]="晚上";
+		                    	break;
+		                    default:
+		                    	item["time"]="无";
+		                    		
+		                    }
+		                    item["tid"] = "舌苔";
+						var deleteBtn='<a class="delete" data-id="'+ item.pid +'" href="#" style="color:#d87a80;"><i class="fa fa fa-trash"></i></a>';
+						var editBtn='<a class="edit" data-id="'+ item.pid +'" href="#" style="color:#5ab1ef;"><i class="fa fa fa-edit"></i></a>';
+						var detailBtn='<a class="detail" data-id="'+ item.pid +'" href="#" style="color:#97b552;"><i class="fa fa-search-plus"></i></a>';
+						item["operation"] =detailBtn+"&nbsp;&nbsp;&nbsp;"+editBtn+"&nbsp;&nbsp;"+deleteBtn;
+					})
+					return obj;
+		           }
+					},
+			           columns: [//定义接受到的数据，“key”
+			               { data: 'index' },
+			               { data: 'upload_date' },
+			               { data: 'time' },
+			               { data: 'tid' },
+			               { data : 'operation'}
+			           ],
+			           "fnRowCallback": function( nRow, aData, iDisplayIndex ) {
+							/* Append the grade to the default row class name */
+							$('td:eq(0)', nRow).html( '<b>'+$('td:eq(0)', nRow).html()+'</b>' );
+							return nRow;
+				 		}
+		       })
+		       
+				$("#table_id").on("click",".detail",function(){
+					var id = $(this).data("id");
+					openDialogView('查看大气站监测因子详情', '${ctx}/sys/sysAirStationFactor/form?id=' + id, '40%', '70%');
+				})
+		})
+	</script>
   </div>
 </body>
 

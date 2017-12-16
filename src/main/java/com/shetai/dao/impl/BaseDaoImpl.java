@@ -68,11 +68,16 @@ public class BaseDaoImpl<E> implements BaseDao<E>{
 	}
 	
 	public List<E> query(String table){
-		Session session=sessionFactory.openSession();   
-    	String hql="from "+table;
-		Query query = session.createQuery(hql);
-		session.close();
-		return query.list(); 
+		Session session=null;
+		try {
+			session=sessionFactory.openSession();   
+	    	String hql="from "+table;
+			Query query = session.createQuery(hql);
+			return query.list();
+		} finally {
+			// TODO: handle finally clause
+			session.close();
+		}
 	}
 	
 	public List<E> query(String table,E entity){
