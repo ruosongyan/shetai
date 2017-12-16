@@ -48,6 +48,11 @@
             </result>
             <result name="fail">/error.jsp</result>
         </action>
+        
+        <action name="upload" class="com.shetai.web.UploadAction">
+        		<result name="success">/index.jsp</result>
+        </action>
+        
     </package> 
     
 </struts>
