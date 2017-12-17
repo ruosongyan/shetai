@@ -37,7 +37,7 @@
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
-          <a class="nav-link" href="index.html">
+          <a class="nav-link" href="info.jsp">
             <i class="fa fa-fw fa-dashboard"></i>
             <span class="nav-link-text">个人信息</span>
           </a>
@@ -52,7 +52,7 @@
               <a href="appoint.jsp">申请诊断</a>
             </li>
             <li>
-              <a href="cards.html">诊断记录</a>
+              <a href="list.jsp">诊断记录</a>
             </li>
           </ul>
         </li>

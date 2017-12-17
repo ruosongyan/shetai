@@ -27,6 +27,49 @@
   <link href="<%= request.getContextPath() %>/staticfile/css/freelancer.css" rel="stylesheet">
   <link href="<%= request.getContextPath() %>/staticfile/css/detail.css" rel="stylesheet">
   <link href="<%= request.getContextPath() %>/staticfile/css/message.css" rel="stylesheet">
+    <style type="text/css">
+  .content-wrapper{
+  text-align: center;
+  }
+  #upload-container{
+  position:relative;
+  margin:0 auto;
+  background-image:url(<%= request.getContextPath() %>/staticfile/img/addpic_normal.png);
+  background-repeat:no-repeat;
+  width:350px;
+  height:350px;
+  background-size:100% 100%;
+  }
+  #upload-container:hover{
+    background-image:url(<%= request.getContextPath() %>/staticfile/img/addpic_hover.png);
+  }
+  #uploadinput {
+    position: absolute;
+    width: 100%;
+    height:100%;
+    top: 0;
+    left: 0;
+    opacity: 0;
+}
+.form-group{
+	margin-top:40px;
+	height:40px;
+}
+.mybtn{
+width:100px;
+height:40px;
+margin-bottom:50px;
+}
+
+.left{
+	float:left;
+}
+
+.right{
+	float:left;
+	width:600px;
+}
+  </style>
 </head>
 
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
@@ -39,7 +82,7 @@
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
-          <a class="nav-link" href="index.html">
+          <a class="nav-link" href="info.jsp">
             <i class="fa fa-fw fa-dashboard"></i>
             <span class="nav-link-text">个人信息</span>
           </a>
@@ -223,37 +266,57 @@
   <div class="content-wrapper">
     <div class="container-fluid">
 		<div class="container" id="container">
-			<p id="pid" style="display:none;"><s:property value="pid"/></p>
-			<s:iterator value="detailList" id="d" status="st">
-				<div class="message">
-					<div class="row1">
-						<div data-sid="<s:property value="sender_id"/>" 
-							<s:if test="#d.sender_type==1">class="doctor"</s:if>
-							<s:if test="#d.sender_type==0">class="user"</s:if>
-							><s:property value="sender_name"/></div>
-						<div class="to">回复</div>
-						<div data-rid="<s:property value="receive_id"/>" 
-							<s:if test="#d.receive_type==1">class="doctor"</s:if>
-							<s:if test="#d.receive_type==0">class="user"</s:if>
-						><s:property value="receive_name"/></div>
-					</div>
-					<div class="row2"><s:property value="content"/></div>
-					<div class="row3">
-						<div class="time">--<s:property value="time"/>--</div>
-						<div class="reply" >
-							<a href="#" onclick="replyDiv(this)">回复</a>
+			<div class="left">
+				<h2 class="text-center text-uppercase text-secondary mb-0">申请诊断</h2>
+				<hr class="star-dark mb-5">
+		    		<form id="appointform" method="post" action="upload" enctype="multipart/form-data">
+				<div id="upload-container" href="javascript:void(0);"><input id="uploadinput" type="file" name="file" value="file" onchange="imgPreview(this)"></div>
+				<div class="form-group">
+					<label>拍摄日期：</label>
+					<input name="date" type="date" value="2017-12-17"/>
+				</div>
+				<div class="form-group">
+				<label>时间段：</label>
+				<select name = "time">
+		  			<option value ="0">上午</option>
+		 			<option value ="1">下午</option>
+		 			<option value="2">晚上</option>
+				</select>
+				</div>
+			</div>
+			<div class="right">
+				<p id="pid" style="display:none;"><s:property value="pid"/></p>
+				<s:iterator value="detailList" id="d" status="st">
+					<div class="message">
+						<div class="row1">
+							<div data-sid="<s:property value="sender_id"/>" 
+								<s:if test="#d.sender_type==1">class="doctor"</s:if>
+								<s:if test="#d.sender_type==0">class="user"</s:if>
+								><s:property value="sender_name"/></div>
+							<div class="to">回复</div>
+							<div data-rid="<s:property value="receive_id"/>" 
+								<s:if test="#d.receive_type==1">class="doctor"</s:if>
+								<s:if test="#d.receive_type==0">class="user"</s:if>
+							><s:property value="receive_name"/></div>
+						</div>
+						<div class="row2"><s:property value="content"/></div>
+						<div class="row3">
+							<div class="time">--<s:property value="time"/>--</div>
+							<div class="reply" >
+								<a href="#" onclick="replyDiv(this)">回复</a>
+							</div>
+						</div>
+						<div class="row4">
+							<div class="input-group">
+						      <input type="text" class="form-control" placeholder="请输入内容">
+						      <span class="input-group-btn">
+						        <button class="btn btn-success" type="button" onclick="send(this)">发送</button>
+						      </span>
+						    </div>
 						</div>
 					</div>
-					<div class="row4">
-						<div class="input-group">
-					      <input type="text" class="form-control" placeholder="请输入内容">
-					      <span class="input-group-btn">
-					        <button class="btn btn-success" type="button" onclick="send(this)">发送</button>
-					      </span>
-					    </div>
-					</div>
-				</div>
-			</s:iterator>
+				</s:iterator>
+			</div>
 	    </div>
 	      
     </div>

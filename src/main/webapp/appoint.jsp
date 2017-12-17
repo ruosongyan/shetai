@@ -112,7 +112,7 @@ margin-bottom:50px;
           </a>
           <ul class="sidenav-second-level collapse" id="collapseComponents">
             <li>
-              <a href="navbar.jsp">申请诊断</a>
+              <a href="appoint.jsp">申请诊断</a>
             </li>
             <li>
               <a href="list.jsp">诊断记录</a>

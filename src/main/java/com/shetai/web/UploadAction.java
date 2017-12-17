@@ -20,7 +20,7 @@ public class UploadAction extends BaseAction{
 	
 	@Override
 	public String execute() throws IOException {
-		String userid = "77777";
+		String userid = (String) session.get("id");;
 		
 		psi.uploadpic(file,userid,time,date);
 		
