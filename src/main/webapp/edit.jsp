@@ -24,8 +24,70 @@
   <link href="<%= request.getContextPath() %>/staticfile/vendor/magnific-popup/magnific-popup.css" rel="stylesheet" type="text/css">
   <!-- Custom styles for this template -->
   <link href="<%= request.getContextPath() %>/staticfile/css/freelancer.css" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/staticfile/css/jquery.dataTables.min.css">
-  <link href="<%= request.getContextPath() %>/staticfile/css/message.css" rel="stylesheet">
+  <style type="text/css">
+  .content-wrapper{
+  text-align: center;
+  }
+  #upload-container{
+  position:relative;
+  margin:0 auto;
+  background-image:url(<%= request.getContextPath() %>/staticfile/img/addpic_normal.png);
+  background-repeat:no-repeat;
+  width:350px;
+  height:350px;
+  background-size:100% 100%;
+  }
+  #upload-container:hover{
+    background-image:url(<%= request.getContextPath() %>/staticfile/img/addpic_hover.png);
+  }
+  #uploadinput {
+    position: absolute;
+    width: 100%;
+    height:100%;
+    top: 0;
+    left: 0;
+    opacity: 0;
+}
+.form-group{
+	margin-top:40px;
+	height:40px;
+}
+.mybtn{
+width:100px;
+height:40px;
+margin-bottom:50px;
+}
+  </style>
+  <script type="text/javascript">
+  function	checkSubmit(){
+	  alert("上传成功！");
+	  document.getElementById("appointform").submit();
+  }
+    function imgPreview(fileDom){
+        //判断是否支持FileReader
+        if (window.FileReader) {
+            var reader = new FileReader();
+        } else {
+            alert("您的设备不支持图片预览功能，如需该功能请升级您的设备！");
+        }
+        //获取文件
+        var file = fileDom.files[0];
+        var imageType = /^image\//;
+        //是否是图片
+        if (!imageType.test(file.type)) {
+            alert("请选择图片！");
+            return;
+        }
+        //读取完成
+        reader.onload = function(e) {
+            //获取图片dom
+            var img = document.getElementById("upload-container");
+            //图片路径设置为读取的图片
+            img.style.backgroundImage="url("+ e.target.result +")";;
+        };
+        reader.readAsDataURL(file);
+    }
+</script>
 </head>
 
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
@@ -219,25 +281,26 @@
       </ul>
     </div>
   </nav>
-  <div class="content-wrapper">
-    <div class="container-fluid">
-		<div class="container">
-	        <table id="table_id" class="display">
-			    <thead>
-			    <tr>
-			        <th>#</th>
-			        <th>日期</th>
-			        <th>时间段</th>
-			        <th>分类</th>
-			        <th>操作</th>
-			    </tr>
-			    </thead>
-			    <tbody>
-			    </tbody>
-			</table>
+  	<div class="content-wrapper">
+		<h2 class="text-center text-uppercase text-secondary mb-0">申请诊断</h2>
+		<hr class="star-dark mb-5">
+    		<form id="appointform" method="post" action="edit" enctype="multipart/form-data">
+		<div id="upload-container" href="javascript:void(0);"><input id="uploadinput" type="file" name="file" value="file" onchange="imgPreview(this)"></div>
+		<div class="form-group">
+			<label>拍摄日期：</label>
+			<input name="date" type="date" value="2017-12-17"/>
 		</div>
-	      
-    </div>
+		<div class="form-group">
+		<label>时间段：</label>
+		<select name = "time">
+  			<option value ="0">上午</option>
+ 			<option value ="1">下午</option>
+ 			<option value="2">晚上</option>
+		</select>
+		</div>
+		<input type="button" value="确定" class="btn btn-primary mybtn" onclick = "checkSubmit();" />
+	</form>
+	</div>
     <!-- /.container-fluid-->
     <!-- /.content-wrapper-->
     <footer class="sticky-footer">
@@ -289,92 +352,7 @@
     <!-- Contact Form JavaScript -->
     <script src="<%= request.getContextPath() %>/staticfile/js/jqBootstrapValidation.js"></script>
     <script src="<%= request.getContextPath() %>/staticfile/js/contact_me.js"></script>
-	<script type="text/javascript" charset="utf8" src="<%= request.getContextPath() %>/staticfile/js/jquery.dataTables.min.js"></script>
-	<script src="<%= request.getContextPath() %>/staticfile/js/message.js"></script>
-	<script>
-		$(document).ready( function () {
-		       var tables=$('#table_id').DataTable({
-		    	   	dom: '<"top"f>rt<"bottom"ip><"clear">',
-					language: {
-						search: ""
-					},
-					iDisplayLength: 15,//分页大小
-		           "ajax":{
-		           	url: "photolist",
-					dataSrc: function(json) {
-						//处理返回数据
-						var obj= eval('(' + json + ')');
-						obj.forEach(function(item,index) {
-							item["index"] = index+1;
-		                    item["upload_date"] = item.upload_date;
-		                    switch(item.time){
-		                    case 0:
-		                    	item["time"]="早上";
-		                    	break;
-		                    case 1:
-		                    	item["time"]="中午";
-		                    	break;
-		                    case 2:
-		                    	item["time"]="晚上";
-		                    	break;
-		                    default:
-		                    	item["time"]="无";
-		                    		
-		                    }
-		                    item["tid"] = "舌苔";
-						var deleteBtn='<a class="delete" data-id="'+ item.pid +'" href="#" style="color:#d87a80;"><i class="fa fa fa-trash"></i></a>';
-						var editBtn='<a class="edit" data-id="'+ item.pid +'" href="#" style="color:#5ab1ef;"><i class="fa fa fa-edit"></i></a>';
-						var detailBtn='<a class="detail" data-id="'+ item.pid +'" href="#" style="color:#97b552;"><i class="fa fa-search-plus"></i></a>';
-						item["operation"] =detailBtn+"&nbsp;&nbsp;&nbsp;"+editBtn+"&nbsp;&nbsp;"+deleteBtn;
-					})
-					return obj;
-		           }
-					},
-			           columns: [//定义接受到的数据，“key”
-			               { data: 'index' },
-			               { data: 'upload_date' },
-			               { data: 'time' },
-			               { data: 'tid' },
-			               { data : 'operation'}
-			           ],
-			           "fnRowCallback": function( nRow, aData, iDisplayIndex ) {
-							/* Append the grade to the default row class name */
-							$('td:eq(0)', nRow).html( '<b>'+$('td:eq(0)', nRow).html()+'</b>' );
-							return nRow;
-				 		}
-		       })
-		       
-		       //查看详情
-				$("#table_id").on("click",".detail",function(){
-					var id = $(this).data("id");
-					console.log(id);
-					window.location.href="detail?id="+id+"&backurl="+window.location.href; 
-				})
-				
-				//删除
-				$("#table_id").on("click",".delete",function(){
-					var id = $(this).data("id");
-					var table = $('#table').DataTable();
-					var row = table.row($(this).parents('tr'));
-					$.post('delete', {
-						pid: id
-					}, function(data) {
-						row.remove().draw(false); 
-						$.message('删除成功');
-						setTimeout("location.reload()",800)
-						
-					});
-				})
-				
-				//修改
-				$("#table_id").on("click",".edit",function(){
-					var id = $(this).data("id");
-					console.log(id);
-					window.location.href="edit.jsp?id="+id+"&backurl="+window.location.href; 
-				})
-		})
-	</script>
+
   </div>
 </body>
-
 </html>
