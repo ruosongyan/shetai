@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.List;
 import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
@@ -84,5 +85,13 @@ public class PhotoDaoImpl extends BaseDaoImpl<Photo> implements PhotoDao{
 		      sb.append(base.charAt(number));   
 		    }   
 		    return sb.toString();   
-		   }  
+		   }
+
+	@Override
+	public Photo getPhoto(String pid) {
+		Photo p = new Photo();
+		p.setPid(pid);
+		List<Photo> plist = query("Photo", p);
+		return plist.get(0);
+	}  
 }
