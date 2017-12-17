@@ -284,7 +284,7 @@ margin-bottom:50px;
   	<div class="content-wrapper">
 		<h2 class="text-center text-uppercase text-secondary mb-0">申请诊断</h2>
 		<hr class="star-dark mb-5">
-    		<form id="appointform" method="post" action="upload" enctype="multipart/form-data">
+    		<form id="appointform" method="post" action="edit" enctype="multipart/form-data">
 		<div id="upload-container" href="javascript:void(0);"><input id="uploadinput" type="file" name="file" value="file" onchange="imgPreview(this)"></div>
 		<div class="form-group">
 			<label>拍摄日期：</label>

@@ -63,6 +63,11 @@ public class PhotoAction extends BaseAction{
 		return "success";
 	}
 	
+	public String editPhoto() {
+		
+		return "success";
+	}
+	
 	public String getResult() {
 		return result;
 	}

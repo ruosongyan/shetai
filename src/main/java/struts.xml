@@ -52,6 +52,11 @@
         		<result name="fail"></result>
         </action>
         
+        <action name="edit" class="com.shetai.web.PhotoAction" method="editPhoto">
+        		<result name="success">/edit.jsp</result>
+        		<result name="fail"></result>
+        </action>
+        
         <action name="upload" class="com.shetai.web.UploadAction">
         		<result name="success">/appoint.jsp</result>
         		<result name="fail"></result>
