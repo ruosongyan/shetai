@@ -11,8 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.shetai.entity.DetailBean;
 import com.shetai.entity.Message;
+import com.shetai.entity.Photo;
 import com.shetai.entity.User;
 import com.shetai.service.MessageService;
+import com.shetai.service.PhotoService;
 import com.shetai.service.UserService;
 import com.shetai.utils.Utils;
 
@@ -20,12 +22,16 @@ public class MessageAction extends BaseAction{
 	@Autowired
 	private MessageService messageService;
 	@Autowired
+	private PhotoService photoService;
+	@Autowired
 	private UserService userService;
 	private String content;
 	private String pid;
 	private String sender_id;
 	private String receive_id;
-	
+	private String pic_path;
+
+
 	private ArrayList<DetailBean> detailList;
 	
 	public String execute() {
@@ -58,6 +64,10 @@ public class MessageAction extends BaseAction{
 			detailBean.setReceive_type(rtype);
 			detailList.add(detailBean);
 		}
+		Photo p = photoService.getPhoto(pid);
+		pic_path = p.getPosition();
+		System.out.println(pic_path);
+		
 		return "success";
 	}
 	
@@ -124,5 +134,13 @@ public class MessageAction extends BaseAction{
 
 	public void setReceive_id(String receive_id) {
 		this.receive_id = receive_id;
+	}
+	public String getPic_path() {
+		return pic_path;
+	}
+
+
+	public void setPic_path(String pic_path) {
+		this.pic_path = pic_path;
 	}
 }

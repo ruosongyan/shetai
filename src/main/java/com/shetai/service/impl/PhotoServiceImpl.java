@@ -33,5 +33,12 @@ public class PhotoServiceImpl extends BaseServiceImpl<PhotoDaoImpl,Photo> implem
 		pdi.add(p);
 		return "success" ;
 	}
+
+	@Override
+	public Photo getPhoto(String pid) {
+		// TODO Auto-generated method stub
+		
+		return pdi.getPhoto(pid);
+	}
 	
 }

@@ -31,17 +31,9 @@
   .content-wrapper{
   text-align: center;
   }
-  #upload-container{
-  position:relative;
-  margin:0 auto;
-  background-image:url(<%= request.getContextPath() %>/staticfile/img/addpic_normal.png);
-  background-repeat:no-repeat;
+  #img{
   width:350px;
   height:350px;
-  background-size:100% 100%;
-  }
-  #upload-container:hover{
-    background-image:url(<%= request.getContextPath() %>/staticfile/img/addpic_hover.png);
   }
   #uploadinput {
     position: absolute;
@@ -267,22 +259,7 @@ margin-bottom:50px;
     <div class="container-fluid">
 		<div class="container" id="container">
 			<div class="left">
-				<h2 class="text-center text-uppercase text-secondary mb-0">申请诊断</h2>
-				<hr class="star-dark mb-5">
-		    		<form id="appointform" method="post" action="upload" enctype="multipart/form-data">
-				<div id="upload-container" href="javascript:void(0);"><input id="uploadinput" type="file" name="file" value="file" onchange="imgPreview(this)"></div>
-				<div class="form-group">
-					<label>拍摄日期：</label>
-					<input name="date" type="date" value="2017-12-17"/>
-				</div>
-				<div class="form-group">
-				<label>时间段：</label>
-				<select name = "time">
-		  			<option value ="0">上午</option>
-		 			<option value ="1">下午</option>
-		 			<option value="2">晚上</option>
-				</select>
-				</div>
+				<image  id="img" src="/dataResourceImages/<s:property value='pic_path'/>" />
 			</div>
 			<div class="right">
 				<p id="pid" style="display:none;"><s:property value="pid"/></p>
