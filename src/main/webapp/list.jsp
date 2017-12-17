@@ -370,7 +370,7 @@
 				$("#table_id").on("click",".edit",function(){
 					var id = $(this).data("id");
 					console.log(id);
-					window.location.href="edit.jsp?id="+id+"&backurl="+window.location.href; 
+					window.location.href="editPage?id="+id+"&backurl="+window.location.href; 
 				})
 		})
 	</script>

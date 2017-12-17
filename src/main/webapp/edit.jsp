@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
+<%@ taglib prefix="s" uri="/struts-tags"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -60,7 +61,7 @@ margin-bottom:50px;
   </style>
   <script type="text/javascript">
   function	checkSubmit(){
-	  alert("上传成功！");
+	  alert("修改成功！");
 	  document.getElementById("appointform").submit();
   }
     function imgPreview(fileDom){
@@ -83,9 +84,10 @@ margin-bottom:50px;
             //获取图片dom
             var img = document.getElementById("upload-container");
             //图片路径设置为读取的图片
-            img.style.backgroundImage="url("+ e.target.result +")";;
+            img.style.backgroundImage="url("+ e.target.result +")";
         };
         reader.readAsDataURL(file);
+        $("#sign").val("1");
     }
 </script>
 </head>
@@ -282,20 +284,22 @@ margin-bottom:50px;
     </div>
   </nav>
   	<div class="content-wrapper">
-		<h2 class="text-center text-uppercase text-secondary mb-0">申请诊断</h2>
+		<h2 class="text-center text-uppercase text-secondary mb-0">诊断记录修改</h2>
 		<hr class="star-dark mb-5">
-    		<form id="appointform" method="post" action="edit" enctype="multipart/form-data">
+    		<form id="appointform" method="post" action="editPhoto" enctype="multipart/form-data">
+    		<input name="pic_path" id="position" value="${pic_path}" type="text" style="display:none;">
+    		<input name="sign" id="sign" value="0" type="text" style="display:none;">
 		<div id="upload-container" href="javascript:void(0);"><input id="uploadinput" type="file" name="file" value="file" onchange="imgPreview(this)"></div>
 		<div class="form-group">
 			<label>拍摄日期：</label>
-			<input name="date" type="date" value="2017-12-17"/>
+			<input name="date" type="date" value="${date}"/>
 		</div>
 		<div class="form-group">
 		<label>时间段：</label>
 		<select name = "time">
-  			<option value ="0">上午</option>
- 			<option value ="1">下午</option>
- 			<option value="2">晚上</option>
+  			<option value ="0" <s:if test="#request.time==0">selected</s:if> >上午</option>
+ 			<option value ="1" <s:if test="#request.time==1">selected</s:if>>下午</option>
+ 			<option value="2" <s:if test="#request.time==2">selected</s:if>>晚上</option>
 		</select>
 		</div>
 		<input type="button" value="确定" class="btn btn-primary mybtn" onclick = "checkSubmit();" />

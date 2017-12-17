@@ -1,8 +1,12 @@
 package com.shetai.web;
 
+import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.shetai.entity.Message;
@@ -21,6 +25,11 @@ public class PhotoAction extends BaseAction{
 	private MessageService messageService;
 	private String pid;
 	private String result;
+	private String pic_path;
+	private String sign;
+	private int time;
+	private Date date;
+	
 	public String execute() {
 		Photo entity=new Photo();
 		entity.setUid((String) session.get("id"));
@@ -63,7 +72,40 @@ public class PhotoAction extends BaseAction{
 		return "success";
 	}
 	
+	public String editPage() {
+		HttpServletRequest reqeust= ServletActionContext.getRequest();  
+		pid=reqeust.getParameter("id");
+		session.put("pid", pid);
+		
+		Photo p = photoService.getPhoto(pid);
+		pic_path = p.getPosition();
+		time = p.getTime();
+		date = p.getUpload_date();
+		
+		return "success";
+	}
+	
 	public String editPhoto() {
+		String path="";
+		System.out.println(sign);
+		if(sign.equals("1")) {
+			path=photoService.getRandomPath((String) session.get("id"));
+			
+		}else {
+			path=pic_path;
+		}
+		Photo p = new Photo();
+		p.setPid((String) session.get("pid"));
+		p.setUid((String) session.get("id"));
+		p.setPhoto_type(0);
+		p.setDid("");
+		p.setPosition(path);
+		p.setTime(time);
+		p.setUpload_date(date);
+		
+		System.out.println("pppp:  "+path);
+		
+		photoService.update(p);
 		
 		return "success";
 	}
@@ -82,4 +124,37 @@ public class PhotoAction extends BaseAction{
 	public void setPid(String pid) {
 		this.pid = pid;
 	}
+	
+
+	public String getPic_path() {
+		return pic_path;
+	}
+
+	public void setPic_path(String pic_path) {
+		this.pic_path = pic_path;
+	}
+	public int getTime() {
+		return time;
+	}
+
+	public void setTime(int time) {
+		this.time = time;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public String getSign() {
+		return sign;
+	}
+
+	public void setSign(String sign) {
+		this.sign = sign;
+	}
+
 }

@@ -40,5 +40,13 @@ public class PhotoServiceImpl extends BaseServiceImpl<PhotoDaoImpl,Photo> implem
 		
 		return pdi.getPhoto(pid);
 	}
+
+	@Override
+	public String getRandomPath(String userid) {
+		// TODO Auto-generated method stub
+		String newPath = userid+"/"+pdi.getRandomString(20);
+		
+		return newPath;
+	}
 	
 }
