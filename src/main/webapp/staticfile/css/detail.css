@@ -3,6 +3,7 @@
 	overflow:hidden;
 	padding-bottom:10px;
 	border-bottom: 1px solid #e9ecef; 
+	margin-bottom:10px;
 }
 .row1 *{
 	display:inline-block;
@@ -32,4 +33,5 @@
 }
 .row4{
 	display:none;
+	padding:5px;
 }

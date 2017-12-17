@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
+<%@ taglib prefix="s" uri="/struts-tags"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -229,11 +230,11 @@
 	        	<div class="row">
 		          <div class="col-lg-8 mx-auto">
 		            <!-- The form should work on most web servers, but if the form is not working you may need to configure your web server differently. -->
-		            <form name="sentMessage" id="contactForm" novalidate="novalidate">
+		            <form name="sentMessage" action="modifyInfo"  novalidate="novalidate">
 		              <div class="control-group">
 		                <div class="form-group floating-label-form-group controls mb-0 pb-2">
 		                  <label>姓名</label>
-		                  <input class="form-control" id="name" type="text" value="${name}" placeholder="姓名" required="required" data-validation-required-message="请输入你的姓名.">
+		                  <input class="form-control" id="name" type="text" name="name" value="${name}" placeholder="姓名" required="required" data-validation-required-message="请输入你的姓名.">
 		                  <p class="help-block text-danger"></p>
 		                </div>
 		              </div>
@@ -241,10 +242,10 @@
 		                <div class="form-group controls mb-0 pb-2 radio-form-group">
 		                  <label>性别</label>
 	                      <label class="radio-inline">
-	                          <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline1" value="0" checked>男
+	                          <input type="radio" name="gender" id="optionsRadiosInline1" value="0" <s:if test="#request.gender==0">checked</s:if>>男
 	                      </label>
 	                      <label class="radio-inline">
-	                          <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline2" value="1">女
+	                          <input type="radio" name="gender" id="optionsRadiosInline2" value="1"<s:if test="#request.gender==1">checked</s:if>>女
 	                      </label>
 		                  <p class="help-block text-danger"></p>
 		                </div>
@@ -252,28 +253,28 @@
 		              <div class="control-group">
 		                <div class="form-group floating-label-form-group controls mb-0 pb-2">
 		                  <label>年龄</label>
-		                  <input class="form-control" id="phone" type="tel" placeholder="年龄" required="required" data-validation-required-message="请输入你的年龄.">
+		                  <input class="form-control" id="phone" name="age" value="${age}" type="tel" placeholder="年龄" required="required" data-validation-required-message="请输入你的年龄.">
 		                  <p class="help-block text-danger"></p>
 		                </div>
 		              </div>
 		              <div class="control-group">
 		                <div class="form-group floating-label-form-group controls mb-0 pb-2">
 		                  <label>病史</label>
-		                  <textarea class="form-control" id="message" rows="5" placeholder="病史" required="required" data-validation-required-message="请输入你的病史."></textarea>
+		                  <textarea class="form-control" id="message" name="medicalHistory" rows="5" placeholder="病史" required="required" data-validation-required-message="请输入你的病史."><s:property value="medicalHistory"/></textarea>
 		                  <p class="help-block text-danger"></p>
 		                </div>
 		              </div>
 		              <div class="control-group">
 		                <div class="form-group floating-label-form-group controls mb-0 pb-2">
 		                  <label>最近不舒服的症状</label>
-		                  <textarea class="form-control" id="message" rows="5" placeholder="最近不舒服的症状" required="required" data-validation-required-message="请输入你的不舒服的症状."></textarea>
+		                  <textarea class="form-control" id="message" name="symptom" rows="5" placeholder="最近不舒服的症状" required="required" data-validation-required-message="请输入你的不舒服的症状."><s:property value="symptom"/></textarea>
 		                  <p class="help-block text-danger"></p>
 		                </div>
 		              </div>
 		              <br>
 		              <div id="success"></div>
 		              <div class="form-group">
-		                <button type="submit" class="btn btn-primary btn-xl" id="sendMessageButton">保存</button>
+		                <button type="submit" class="btn btn-primary btn-xl">保存</button>
 		              </div>
 		            </form>
 		          </div>

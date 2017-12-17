@@ -1,5 +1,7 @@
 package com.shetai.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +14,15 @@ public class UserServiceImpl extends BaseServiceImpl<UserDaoImpl,User> implement
 	@Autowired
 	private UserDaoImpl userDao;
 	
-	public boolean validateLogin(String account,String passwd) {
+	public User validateLogin(String account,String passwd) {
 		User user = new User();
 		user.setAccount(account);
 		user.setPasswd(passwd);
-		return userDao.queryByLoginInfo(user);
+		User u = null;
+		List<User> list=null;
+		if( (list=userDao.query("User",user))!=null) {
+			u=list.get(0);
+		}
+		return u;
 	}
 }

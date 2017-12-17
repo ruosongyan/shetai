@@ -14,4 +14,6 @@ public interface BaseService<E extends BaseDaoImpl<T>,T>{
 	public List<T> query(String table);
 	
 	public List<T> query(String table,T entity);
+	
+	public T query(String table,String id);
 }

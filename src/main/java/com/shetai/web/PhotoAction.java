@@ -15,6 +15,7 @@ import net.sf.json.processors.JsonValueProcessor;
 public class PhotoAction extends BaseAction{
 	@Autowired
 	private PhotoService photoService;
+	private String pid;
 	private String result;
 	public String execute() {
 		List<Photo> list=photoService.query("Photo");
@@ -38,14 +39,9 @@ public class PhotoAction extends BaseAction{
         });
 		JSONArray jsonArray = JSONArray.fromObject(list,jsonConfig); 
 		result=jsonArray.toString();
-		System.out.println(result);
 		return "success";
 	}
 	
-	public String sendMessage() {
-		
-		return "success";
-	}
 	public String getResult() {
 		return result;
 	}

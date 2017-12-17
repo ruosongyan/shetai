@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
+<%@ taglib prefix="s" uri="/struts-tags"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -221,27 +222,38 @@
   </nav>
   <div class="content-wrapper">
     <div class="container-fluid">
-		<div class="container">
-	        	<div class="message">
+		<div class="container" id="container">
+			<p id="pid" style="display:none;"><s:property value="pid"/></p>
+			<s:iterator value="detailList" id="d" status="st">
+				<div class="message">
 					<div class="row1">
-						<div class="doctor">医生</div>
+						<div data-sid="<s:property value="sender_id"/>" 
+							<s:if test="#d.sender_type==1">class="doctor"</s:if>
+							<s:if test="#d.sender_type==0">class="user"</s:if>
+							><s:property value="sender_name"/></div>
 						<div class="to">回复</div>
-						<div class="user">用户</div>
+						<div data-rid="<s:property value="receive_id"/>" 
+							<s:if test="#d.receive_type==1">class="doctor"</s:if>
+							<s:if test="#d.receive_type==0">class="user"</s:if>
+						><s:property value="receive_name"/></div>
 					</div>
-					<div class="row2">You need more sleep and blu blu bludaf af adf adf adf adf adf adf asdf adsf asdf afffffffffffffffffffffffffffffffffff</div>
+					<div class="row2"><s:property value="content"/></div>
 					<div class="row3">
-						<div class="time">--2017-12-18--</div>
-						<div class="reply" id="reply">回复</div>
+						<div class="time">--<s:property value="time"/>--</div>
+						<div class="reply" >
+							<a href="#" onclick="replyDiv(this)">回复</a>
+						</div>
 					</div>
 					<div class="row4">
 						<div class="input-group">
-					      <input type="text" class="form-control" id="content" placeholder="请输入内容">
+					      <input type="text" class="form-control" placeholder="请输入内容">
 					      <span class="input-group-btn">
-					        <button class="btn btn-success" id="send" type="button">发送</button>
+					        <button class="btn btn-success" type="button" onclick="send(this)">发送</button>
 					      </span>
 					    </div>
 					</div>
 				</div>
+			</s:iterator>
 	    </div>
 	      
     </div>
@@ -298,42 +310,73 @@
     <script src="<%= request.getContextPath() %>/staticfile/js/contact_me.js"></script>
     <script src="<%= request.getContextPath() %>/staticfile/js/message.js"></script>
 	<script>
-		$(document).ready(function(){
-			$('#reply').click(function(){
-				//val display=$(this);
-				console.log($(this).tagName);
-				//console.log(display);
-				//if(display!="none"){
-				//	$(this).parent().next().css('display','none');
-				//}else{
-				//	$(this).parent().next().css('display','block');
-				//}
-			})
+	
+		function replyDiv(obj){
+			var display=$(obj).parent().parent().next().css("display");
+			if(display!="none"){
+				$(obj).parent().parent().next().css('display','none');
+			}else{
+				$(obj).parent().parent().next().css('display','block');
+			}
+		}
+		
+		function send(obj){
+			var content = $(obj).parent().prev().val();
+			var pid=$('#pid').html();
+			var sid=$(obj).parents(".row4").prevAll(".row1").children('div:first-child').data('sid');
+			var rid=$(obj).parents(".row4").prevAll(".row1").children('div:last-child').data('rid');
+			var sname=$(obj).parents(".row4").prevAll(".row1").children('div:first-child').html();
+			var rname=$(obj).parents(".row4").prevAll(".row1").children('div:last-child').html();
+			var myDate = new Date();
+			var year=myDate.getFullYear().toString();
+			var time=year.substr(2,2)+"-"+myDate.getMonth()+"-"+myDate.getDate();
+			if(content==null || content==""){
+				$.message({
+  	  		        message:'内容不能为空',
+  	  		        type:'error'
+  	  		    });
+			}else{
+				$.ajax({  
+                    type : "POST",  //提交方式  
+                    url : "sendMessage",//路径  
+                    data : {  
+                        "content" : content,
+                        "pid":pid,
+                        "sender_id":rid,
+                        "receive_id":sid
+                    },
+                    success : function(data) {//返回数据根据结果进行相应的处理  
+                    	console.log(data);
+                    	var html="";
+                    	html+="<div class=\"message\">";
+                    	html+="<div class=\"row1\">";
+                    	html+="<div data-sid=\""+rid+"\" class=\"user\">"+rname+"</div>";
+                    	html+="<div class=\"to\">回复</div>"
+                    	html+="<div data-sid=\""+sid+"\" class=\"doctor\">"+sname+"</div>"
+                    	html+="</div>";
+                    	html+="<div class=\"row2\">"+content+"</div>";
+    					html+="<div class=\"row3\">";
+    					html+="<div class=\"time\">--"+time+"--</div>";
+    					html+="<div class=\"reply\" >";
+    					html+="<a href=\"#\" onclick=\"replyDiv(this)\">回复</a>";
+    					html+="</div>";
+    					html+="</div>";
+    					html+="<div class=\"row4\">";
+    					html+="<div class=\"input-group\">";
+    					html+="<input type=\"text\" class=\"form-control\" placeholder=\"请输入内容\">";
+    					html+="<span class=\"input-group-btn\">";
+    					html+="<button class=\"btn btn-success\" type=\"button\" onclick=\"send(this)\">发送</button>";
+    					html+="</span>";
+    					html+="</div>";
+    					html+="</div>";
+    					html+="</div>";
+                    	$('#container').append(html);
+                    	$(obj).parents('.row4').hide();
+                    }  
+                });
+			}
 			
-			
-			$('#send').click(function(){
-				val content = $('#content').val();
-				if(content==null || content==""){
-					$.message({
-	  	  		        message:'内容不能为空',
-	  	  		        type:'error'
-	  	  		    });
-				}else{
-					$.ajax({  
-	                    type : "POST",  //提交方式  
-	                    url : "sendMessage",//路径  
-	                    data : {  
-	                        "content" : content,
-	                        
-	                    },
-	                    success : function(result) {//返回数据根据结果进行相应的处理  
-	                    	
-	                    }  
-	                });
-				}
-				
-			})
-		})
+		}
 	</script>
   </div>
 </body>

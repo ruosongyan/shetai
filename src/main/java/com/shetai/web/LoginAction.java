@@ -2,6 +2,7 @@ package com.shetai.web;
 
 import java.util.List;
 
+import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.shetai.entity.User;
@@ -21,7 +22,9 @@ public class LoginAction extends BaseAction{
 	}
 	
 	public String login() {
-		if(userService.validateLogin(account, passwd)) {
+		User u=null;
+		if((u=userService.validateLogin(account, passwd))!=null) {
+			session.put("id", u.getUid());
 			return "success";
 		}else {
 			return "fail";

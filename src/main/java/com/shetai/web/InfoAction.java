@@ -4,11 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.shetai.dao.impl.UserDaoImpl;
+import com.shetai.entity.User;
+import com.shetai.service.UserService;
 
 @Repository
 public class InfoAction extends BaseAction{
 	@Autowired
-	private UserDaoImpl userDao;
+	private UserService userService;
 	
 	private String name;
 	private int gender;
@@ -17,10 +19,32 @@ public class InfoAction extends BaseAction{
 	private String symptom;
 	
 	public String execute() {
-		
+		String uid=(String) session.get("id");
+		User entity=new User();
+		entity.setUid(uid);
+		User user=userService.query("User", entity).get(0);
+		name=user.getUname();
+		gender=user.getGender();
+		age=user.getAge().toString();
+		medicalHistory=user.getMedical_history();
+		symptom=user.getSymptom();
 		return "success";
 	}
 
+	public String modifyInfo() {
+		String uid=(String) session.get("id");
+		User entity=new User();
+		entity.setUid(uid);
+		User user=userService.query("User", entity).get(0);
+		user.setUname(name);
+		user.setGender(gender);
+		user.setAge(Integer.parseInt(age));
+		user.setMedical_history(medicalHistory);
+		user.setSymptom(symptom);
+		userService.update(user);
+		return "success";
+	}
+	
 	public String getName() {
 		return name;
 	}

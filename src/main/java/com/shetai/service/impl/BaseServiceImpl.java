@@ -30,5 +30,9 @@ public class BaseServiceImpl<E extends BaseDaoImpl<T>,T> implements BaseService<
 	public List<T> query(String table,T entity){
 		return dao.query(table,entity);
 	}
+	
+	public T query(String table,String id) {
+		return dao.query(table, id);
+	}
 
 }
