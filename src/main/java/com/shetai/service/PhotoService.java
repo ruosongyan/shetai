@@ -7,6 +7,6 @@ import com.shetai.dao.impl.PhotoDaoImpl;
 import com.shetai.entity.Photo;
 
 public interface PhotoService extends BaseService<PhotoDaoImpl,Photo>{
-	public String uploadpic(File file) throws IOException;
+	public String uploadpic(File file,String userid) throws IOException;
 
 }

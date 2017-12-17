@@ -4,6 +4,6 @@ import java.io.File;
 import java.io.IOException;
 
 public interface PhotoDao {
-	public String uploadpic(File file) throws IOException;
+	public String uploadpic(File file,String userid) throws IOException;
 
 }

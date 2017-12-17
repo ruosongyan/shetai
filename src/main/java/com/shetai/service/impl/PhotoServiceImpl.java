@@ -16,9 +16,9 @@ public class PhotoServiceImpl extends BaseServiceImpl<PhotoDaoImpl,Photo> implem
 	private PhotoDaoImpl pdi;
 	
 	@Override
-	public String uploadpic(File file) throws IOException {
+	public String uploadpic(File file,String userid) throws IOException {
 		// TODO Auto-generated method stub
-		String result = pdi.uploadpic(file);
+		String result = pdi.uploadpic(file,userid);
 		return result ;
 	}
 }

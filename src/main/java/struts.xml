@@ -50,7 +50,8 @@
         </action>
         
         <action name="upload" class="com.shetai.web.UploadAction">
-        		<result name="success">/index.jsp</result>
+        		<result name="success">/appoint.jsp</result>
+        		<result name="fail"></result>
         </action>
         
     </package> 

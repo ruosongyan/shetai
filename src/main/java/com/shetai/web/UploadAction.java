@@ -20,8 +20,9 @@ public class UploadAction extends BaseAction{
 	
 	@Override
 	public String execute() throws IOException {
+		String userid = "77777";
 		
-		String result =  psi.uploadpic(file);
+		String result =  psi.uploadpic(file,userid);
 		return SUCCESS;
 	}
 
