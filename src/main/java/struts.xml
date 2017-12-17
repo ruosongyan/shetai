@@ -32,6 +32,11 @@
             <result name="success">/info.jsp </result>
             <result name="fail"></result>
         </action>
+        
+        <action name="modifyInfo" class="com.shetai.web.InfoAction" method="modifyInfo">
+            <result name="success">/info.jsp </result>
+            <result name="fail"></result>
+        </action>
     </package> 
     
     <package name="photo" namespace="/" extends="json-default">
@@ -42,17 +47,24 @@
             <result name="fail">/error.jsp</result>
         </action>
         
-        <action name="sendMessage" class="com.shetai.web.PhotoAction" method="sendMessage">
-            <result  type="json">
-            	<param name="root">result</param>
-            </result>
-            <result name="fail">/error.jsp</result>
-        </action>
-        
         <action name="upload" class="com.shetai.web.UploadAction">
-        		<result name="success">/index.jsp</result>
+        		<result name="success">/appoint.jsp</result>
+        		<result name="fail"></result>
         </action>
         
     </package> 
+    
+    <package name="message" namespace="/" extends="struts-default,json-default">
+    	<action name="detail" class="com.shetai.web.MessageAction">
+            <result name="success">/detail.jsp</result>
+            <result name="fail">/error.jsp</result>
+        </action>
+        <action name="sendMessage" class="com.shetai.web.MessageAction" method="sendMessage">
+            <result name="success" type="json">
+            	<param name="root">content</param>
+            </result>
+            <result name="fail">/error.jsp</result>
+        </action>
+    </package>
     
 </struts>
