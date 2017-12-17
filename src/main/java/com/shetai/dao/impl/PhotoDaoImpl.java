@@ -25,6 +25,7 @@ public class PhotoDaoImpl extends BaseDaoImpl<Photo> implements PhotoDao{
 	
 	@Override
 	public String uploadpic(File orignalfile,String userid) throws IOException {
+		String picPath = "";
 		file = orignalfile;
 		try {
 			InputStream in = new FileInputStream(file);
@@ -36,7 +37,7 @@ public class PhotoDaoImpl extends BaseDaoImpl<Photo> implements PhotoDao{
 	      System.out.println("root："+root);
 	    String fileName="";
 	    fileName=getRandomString(20);
-	    String picPath=root+"/"+fileName;//图片保存到数据库的路径
+	    picPath=userid+"/"+fileName;//图片保存到数据库的路径
 	    
 	      System.out.println("开始");
 	    
@@ -71,7 +72,7 @@ public class PhotoDaoImpl extends BaseDaoImpl<Photo> implements PhotoDao{
 			e1.printStackTrace();
 			
 		}
-	    return "SUCCESS";
+	    return picPath;
 	}  
 	  
 	  public String getRandomString(int length) { //length表示生成字符串的长度 

@@ -2,7 +2,7 @@ package com.shetai.web;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
+import java.sql.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -22,7 +22,8 @@ public class UploadAction extends BaseAction{
 	public String execute() throws IOException {
 		String userid = "77777";
 		
-		String result =  psi.uploadpic(file,userid);
+		psi.uploadpic(file,userid,time,date);
+		
 		return SUCCESS;
 	}
 
