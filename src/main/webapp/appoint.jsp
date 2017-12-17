@@ -59,6 +59,10 @@ margin-bottom:50px;
 }
   </style>
   <script type="text/javascript">
+  function	checkSubmit(){
+	  alert("上传成功！");
+	  document.getElementById("appointform").submit();
+  }
     function imgPreview(fileDom){
         //判断是否支持FileReader
         if (window.FileReader) {
@@ -280,18 +284,21 @@ margin-bottom:50px;
   	<div class="content-wrapper">
 		<h2 class="text-center text-uppercase text-secondary mb-0">申请诊断</h2>
 		<hr class="star-dark mb-5">
-    		<form method="post" action="upload" enctype="multipart/form-data">
+    		<form id="appointform" method="post" action="upload" enctype="multipart/form-data">
 		<div id="upload-container" href="javascript:void(0);"><input id="uploadinput" type="file" name="file" value="file" onchange="imgPreview(this)"></div>
-		<div class="form-group"><label>拍摄日期：</label><input type="date" value="2017-12-17"/></div>
+		<div class="form-group">
+			<label>拍摄日期：</label>
+			<input name="date" type="date" value="2017-12-17"/>
+		</div>
 		<div class="form-group">
 		<label>时间段：</label>
-		<select>
-  			<option value ="morning">上午</option>
- 			<option value ="afternoon">下午</option>
- 			<option value="night">晚上</option>
+		<select name = "time">
+  			<option value ="0">上午</option>
+ 			<option value ="1">下午</option>
+ 			<option value="2">晚上</option>
 		</select>
 		</div>
-		<button type="submit" class="btn btn-primary mybtn" >确定</button>
+		<input type="button" value="确定" class="btn btn-primary mybtn" onclick = "checkSubmit();" />
 	</form>
 	</div>
     <!-- /.container-fluid-->
