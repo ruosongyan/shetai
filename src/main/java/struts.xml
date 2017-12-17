@@ -47,6 +47,11 @@
             <result name="fail">/error.jsp</result>
         </action>
         
+        <action name="delete" class="com.shetai.web.PhotoAction" method="deletePhoto">
+        		<result name="success">/list.jsp</result>
+        		<result name="fail"></result>
+        </action>
+        
         <action name="upload" class="com.shetai.web.UploadAction">
         		<result name="success">/appoint.jsp</result>
         		<result name="fail"></result>
