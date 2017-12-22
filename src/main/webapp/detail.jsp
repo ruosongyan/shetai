@@ -102,6 +102,12 @@ margin-bottom:50px;
 .slide-img{
 	height:220px;
 }
+.carousel-control-prev-icon{
+	background-color:#868e96;
+}
+.carousel-control-next-icon{
+	background-color:#868e96;
+}
 @media screen and (max-width : 600px){
 
 }
@@ -239,11 +245,11 @@ margin-bottom:50px;
 				<div class="form-group">
 					<label>时间段：</label>
 					<select name = "time">
-					<!-- 
+					
 						<option value ="0" <s:if test="#request.time==0">selected</s:if>>上午</option>
 			 			<option value ="1" <s:if test="#request.time==1">selected</s:if>>中午</option>
 			 			<option value="2" <s:if test="#request.time==2">selected</s:if>>晚上</option>
-					 -->
+					 
 					</select>
 				</div>
 			</div>
