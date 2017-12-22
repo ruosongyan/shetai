@@ -102,7 +102,7 @@ margin-bottom:50px;
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
-          <a class="nav-link" href="info.jsp">
+          <a class="nav-link" href="info">
             <i class="fa fa-fw fa-dashboard"></i>
             <span class="nav-link-text">个人信息</span>
           </a>
@@ -120,63 +120,6 @@ margin-bottom:50px;
               <a href="list.jsp">诊断记录</a>
             </li>
           </ul>
-        </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
-          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamplePages" data-parent="#exampleAccordion">
-            <i class="fa fa-fw fa-file"></i>
-            <span class="nav-link-text">Example Pages</span>
-          </a>
-          <ul class="sidenav-second-level collapse" id="collapseExamplePages">
-            <li>
-              <a href="login.html">Login Page</a>
-            </li>
-            <li>
-              <a href="register.html">Registration Page</a>
-            </li>
-            <li>
-              <a href="forgot-password.html">Forgot Password Page</a>
-            </li>
-            <li>
-              <a href="blank.html">Blank Page</a>
-            </li>
-          </ul>
-        </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Menu Levels">
-          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti" data-parent="#exampleAccordion">
-            <i class="fa fa-fw fa-sitemap"></i>
-            <span class="nav-link-text">Menu Levels</span>
-          </a>
-          <ul class="sidenav-second-level collapse" id="collapseMulti">
-            <li>
-              <a href="#">Second Level Item</a>
-            </li>
-            <li>
-              <a href="#">Second Level Item</a>
-            </li>
-            <li>
-              <a href="#">Second Level Item</a>
-            </li>
-            <li>
-              <a class="nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti2">Third Level</a>
-              <ul class="sidenav-third-level collapse" id="collapseMulti2">
-                <li>
-                  <a href="#">Third Level Item</a>
-                </li>
-                <li>
-                  <a href="#">Third Level Item</a>
-                </li>
-                <li>
-                  <a href="#">Third Level Item</a>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Link">
-          <a class="nav-link" href="#">
-            <i class="fa fa-fw fa-link"></i>
-            <span class="nav-link-text">Link</span>
-          </a>
         </li>
       </ul>
       <ul class="navbar-nav sidenav-toggler">
@@ -286,9 +229,9 @@ margin-bottom:50px;
   	<div class="content-wrapper">
 		<h2 class="text-center text-uppercase text-secondary mb-0">诊断记录修改</h2>
 		<hr class="star-dark mb-5">
-    		<form id="appointform" method="post" action="editPhoto" enctype="multipart/form-data">
-    		<input name="pic_path" id="position" value="${pic_path}" type="text" style="display:none;">
-    		<input name="sign" id="sign" value="0" type="text" style="display:none;">
+   		<form id="appointform" method="post" action="editPhoto" enctype="multipart/form-data">
+   		<input name="pic_path" id="position" value="${pic_path}" type="text" style="display:none;">
+   		<input name="sign" id="sign" value="0" type="text" style="display:none;">
 		<div id="upload-container" href="javascript:void(0);"><input id="uploadinput" type="file" name="file" value="file" onchange="imgPreview(this)"></div>
 		<div class="form-group">
 			<label>拍摄日期：</label>
@@ -297,8 +240,8 @@ margin-bottom:50px;
 		<div class="form-group">
 		<label>时间段：</label>
 		<select name = "time">
-  			<option value ="0" <s:if test="#request.time==0">selected</s:if> >上午</option>
- 			<option value ="1" <s:if test="#request.time==1">selected</s:if>>下午</option>
+  			<option value ="0" <s:if test="#request.time==0">selected</s:if>>上午</option>
+ 			<option value ="1" <s:if test="#request.time==1">selected</s:if>>中午</option>
  			<option value="2" <s:if test="#request.time==2">selected</s:if>>晚上</option>
 		</select>
 		</div>

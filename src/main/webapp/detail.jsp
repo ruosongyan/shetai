@@ -53,13 +53,48 @@ height:40px;
 margin-bottom:50px;
 }
 
-.left{
-	float:left;
+.message{
+	width:100%;
+	overflow:hidden;
+	padding-bottom:10px;
+	border-bottom: 1px solid #e9ecef; 
+	margin-bottom:10px;
+}
+.row1 *{
+	display:inline-block;
+	padding:5px;
+	margin-bottom:5px;
+}
+.doctor{
+	background-color:#932FD2;
+	color:white;
+}
+.user{
+	background-color:#FF3366;
+	color:white;
 }
 
-.right{
+.row3{
+	color:#767676;
+	margin-top:5px;
+}
+.time{
 	float:left;
-	width:600px;
+	margin-left:5px;
+}
+.reply{
+	float:right;
+	margin-right:5px;
+}
+.row4{
+	display:none;
+	padding:5px;
+}
+@media screen and (max-width : 600px){
+
+}
+
+@media screen and (min-width: 601px){
 }
   </style>
 </head>
@@ -74,7 +109,7 @@ margin-bottom:50px;
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
-          <a class="nav-link" href="info.jsp">
+          <a class="nav-link" href="info">
             <i class="fa fa-fw fa-dashboard"></i>
             <span class="nav-link-text">个人信息</span>
           </a>
@@ -92,63 +127,6 @@ margin-bottom:50px;
               <a href="list.jsp">诊断记录</a>
             </li>
           </ul>
-        </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
-          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamplePages" data-parent="#exampleAccordion">
-            <i class="fa fa-fw fa-file"></i>
-            <span class="nav-link-text">Example Pages</span>
-          </a>
-          <ul class="sidenav-second-level collapse" id="collapseExamplePages">
-            <li>
-              <a href="login.html">Login Page</a>
-            </li>
-            <li>
-              <a href="register.html">Registration Page</a>
-            </li>
-            <li>
-              <a href="forgot-password.html">Forgot Password Page</a>
-            </li>
-            <li>
-              <a href="blank.html">Blank Page</a>
-            </li>
-          </ul>
-        </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Menu Levels">
-          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti" data-parent="#exampleAccordion">
-            <i class="fa fa-fw fa-sitemap"></i>
-            <span class="nav-link-text">Menu Levels</span>
-          </a>
-          <ul class="sidenav-second-level collapse" id="collapseMulti">
-            <li>
-              <a href="#">Second Level Item</a>
-            </li>
-            <li>
-              <a href="#">Second Level Item</a>
-            </li>
-            <li>
-              <a href="#">Second Level Item</a>
-            </li>
-            <li>
-              <a class="nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti2">Third Level</a>
-              <ul class="sidenav-third-level collapse" id="collapseMulti2">
-                <li>
-                  <a href="#">Third Level Item</a>
-                </li>
-                <li>
-                  <a href="#">Third Level Item</a>
-                </li>
-                <li>
-                  <a href="#">Third Level Item</a>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Link">
-          <a class="nav-link" href="#">
-            <i class="fa fa-fw fa-link"></i>
-            <span class="nav-link-text">Link</span>
-          </a>
         </li>
       </ul>
       <ul class="navbar-nav sidenav-toggler">
@@ -259,9 +237,25 @@ margin-bottom:50px;
     <div class="container-fluid">
 		<div class="container" id="container">
 			<div class="left">
+				<h2 class="text-center text-uppercase text-secondary mb-0">诊断信息</h2>
+		        <hr class="star-dark mb-5">
 				<image  id="img" src="/dataResourceImages/<s:property value='pic_path'/>" />
+				<div class="form-group">
+					<label>拍摄日期：</label>
+					<input name="date" type="date" value="2017-12-17"/>
+				</div>
+				<div class="form-group">
+					<label>时间段：</label>
+					<select name = "time">
+			  			<option value ="0" <s:if test="#request.time==0">selected</s:if>>上午</option>
+			 			<option value ="1" <s:if test="#request.time==1">selected</s:if>>中午</option>
+			 			<option value="2" <s:if test="#request.time==2">selected</s:if>>晚上</option>
+					</select>
+				</div>
 			</div>
 			<div class="right">
+				<h2 class="text-center text-uppercase text-secondary mb-0">信息回复</h2>
+		        <hr class="star-dark mb-5">
 				<p id="pid" style="display:none;"><s:property value="pid"/></p>
 				<s:iterator value="detailList" id="d" status="st">
 					<div class="message">

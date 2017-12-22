@@ -1,5 +1,7 @@
 package com.shetai.web;
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -29,6 +31,7 @@ public class PhotoAction extends BaseAction{
 	private String sign;
 	private int time;
 	private Date date;
+	private File file;
 	
 	public String execute() {
 		Photo entity=new Photo();
@@ -57,6 +60,14 @@ public class PhotoAction extends BaseAction{
 		return "success";
 	}
 	
+	public File getFile() {
+		return file;
+	}
+
+	public void setFile(File file) {
+		this.file = file;
+	}
+
 	public String deletePhoto() {
 		Photo entity=new Photo();
 		entity.setPid(pid);
@@ -76,6 +87,7 @@ public class PhotoAction extends BaseAction{
 		HttpServletRequest reqeust= ServletActionContext.getRequest();  
 		pid=reqeust.getParameter("id");
 		session.put("pid", pid);
+		System.out.println("Original Pid : "+pid);
 		
 		Photo p = photoService.getPhoto(pid);
 		pic_path = p.getPosition();
@@ -85,25 +97,23 @@ public class PhotoAction extends BaseAction{
 		return "success";
 	}
 	
-	public String editPhoto() {
+	public String editPhoto() throws IOException {
 		String path="";
 		System.out.println(sign);
 		if(sign.equals("1")) {
-			path=photoService.getRandomPath((String) session.get("id"));
-			
+			path=photoService.uploadpic(file,(String) session.get("id"),time, date);
 		}else {
 			path=pic_path;
 		}
 		Photo p = new Photo();
 		p.setPid((String) session.get("pid"));
+		System.out.println("New Pid : "+(String) session.get("pid"));
 		p.setUid((String) session.get("id"));
 		p.setPhoto_type(0);
 		p.setDid("");
 		p.setPosition(path);
 		p.setTime(time);
 		p.setUpload_date(date);
-		
-		System.out.println("pppp:  "+path);
 		
 		photoService.update(p);
 		

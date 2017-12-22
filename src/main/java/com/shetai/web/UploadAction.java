@@ -7,7 +7,9 @@ import java.sql.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.shetai.entity.Photo;
 import com.shetai.service.PhotoService;
+import com.shetai.utils.Utils;
 
 @Repository
 public class UploadAction extends BaseAction{
@@ -22,7 +24,17 @@ public class UploadAction extends BaseAction{
 	public String execute() throws IOException {
 		String userid = (String) session.get("id");;
 		
-		psi.uploadpic(file,userid,time,date);
+		String path=psi.uploadpic(file,userid,time,date);
+		Photo p = new Photo();
+		p.setPid(Utils.uuid());
+		p.setDid("0");
+		p.setPosition(path);
+		p.setPhoto_type(0);
+		p.setTid(null);
+		p.setUpload_date(date);
+		p.setUid(userid);
+		p.setTime(time);
+		psi.add(p);
 		
 		return SUCCESS;
 	}

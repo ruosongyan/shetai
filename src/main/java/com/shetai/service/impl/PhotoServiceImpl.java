@@ -21,17 +21,7 @@ public class PhotoServiceImpl extends BaseServiceImpl<PhotoDaoImpl,Photo> implem
 	public String uploadpic(File file,String userid,int time,Date date) throws IOException {
 		// TODO Auto-generated method stub
 		String path = pdi.uploadpic(file,userid);
-		Photo p = new Photo();
-		p.setPid(Utils.uuid());
-		p.setDid("0");
-		p.setPosition(path);
-		p.setPhoto_type(0);
-		p.setTid(null);
-		p.setUpload_date(date);
-		p.setUid(userid);
-		p.setTime(time);
-		pdi.add(p);
-		return "success" ;
+		return path ;
 	}
 
 	@Override

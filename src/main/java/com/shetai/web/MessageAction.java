@@ -67,7 +67,7 @@ public class MessageAction extends BaseAction{
 		Photo p = photoService.getPhoto(pid);
 		pic_path = p.getPosition();
 		System.out.println(pic_path);
-		
+				
 		return "success";
 	}
 	
