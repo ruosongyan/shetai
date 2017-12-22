@@ -4,27 +4,41 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.shetai.entity.Message;
+import com.shetai.entity.Notice;
+import com.shetai.entity.NoticeBean;
 import com.shetai.entity.Photo;
+import com.shetai.entity.User;
 import com.shetai.service.MessageService;
+import com.shetai.service.NoticeService;
 import com.shetai.service.PhotoService;
+import com.shetai.service.UserService;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JsonConfig;
 import net.sf.json.processors.JsonValueProcessor;
 
+@Repository
 public class PhotoAction extends BaseAction{
+	@Autowired
+	private UserService userService;
 	@Autowired
 	private PhotoService photoService;
 	@Autowired
 	private MessageService messageService;
+	@Autowired
+	private NoticeService noticeService;
+	
+	private ArrayList<NoticeBean> noticeList;
 	private String pid;
 	private String result;
 	private String pic_path;
@@ -34,6 +48,25 @@ public class PhotoAction extends BaseAction{
 	private File file;
 	
 	public String execute() {
+		List<Notice> list=noticeService.query("Notice");
+		noticeList=new ArrayList<NoticeBean>();
+		for(Notice n:list) {
+			NoticeBean bean=new NoticeBean();
+			bean.setContent(n.getContent());
+			bean.setDate(n.getDate());
+			bean.setTitle(n.getTitle());
+			User entity=new User();
+			entity.setUid(n.getUid());
+			User user=userService.query("User", entity).get(0);
+			if(user!=null) {
+				bean.setUname(user.getUname());
+			}
+			noticeList.add(bean);
+		}
+		return "success";
+	}
+	
+	public String listPhoto() {
 		Photo entity=new Photo();
 		entity.setUid((String) session.get("id"));
 		List<Photo> list=photoService.query("Photo",entity);
@@ -87,13 +120,28 @@ public class PhotoAction extends BaseAction{
 		HttpServletRequest reqeust= ServletActionContext.getRequest();  
 		pid=reqeust.getParameter("id");
 		session.put("pid", pid);
-		System.out.println("Original Pid : "+pid);
 		
 		Photo p = photoService.getPhoto(pid);
 		pic_path = p.getPosition();
 		time = p.getTime();
 		date = p.getUpload_date();
 		
+		//Notice
+		List<Notice> list=noticeService.query("Notice");
+		noticeList=new ArrayList<NoticeBean>();
+		for(Notice n:list) {
+			NoticeBean bean=new NoticeBean();
+			bean.setContent(n.getContent());
+			bean.setDate(n.getDate());
+			bean.setTitle(n.getTitle());
+			User entity=new User();
+			entity.setUid(n.getUid());
+			User user=userService.query("User", entity).get(0);
+			if(user!=null) {
+				bean.setUname(user.getUname());
+			}
+			noticeList.add(bean);
+		}
 		return "success";
 	}
 	
@@ -165,6 +213,14 @@ public class PhotoAction extends BaseAction{
 
 	public void setSign(String sign) {
 		this.sign = sign;
+	}
+
+	public ArrayList<NoticeBean> getNoticeList() {
+		return noticeList;
+	}
+
+	public void setNoticeList(ArrayList<NoticeBean> noticeList) {
+		this.noticeList = noticeList;
 	}
 
 }

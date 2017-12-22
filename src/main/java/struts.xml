@@ -12,7 +12,7 @@
     
     <package name="login" namespace="/" extends="struts-default,json-default">
         <action name="" class="com.shetai.web.LoginAction">
-            <result name="success">/login.jsp </result>
+            <result name="success" type="chain">notice</result>
             <result name="fail">/test.jsp </result>
         </action>
         
@@ -40,7 +40,11 @@
     </package> 
     
     <package name="photo" namespace="/" extends="json-default">
-        <action name="photolist" class="com.shetai.web.PhotoAction">
+    	<action name="list" class="com.shetai.web.PhotoAction">
+        		<result name="success">/list.jsp</result>
+        		<result name="fail"></result>
+        </action>
+        <action name="photolist" class="com.shetai.web.PhotoAction" method="listPhoto">
             <result  type="json">
             	<param name="root">result</param>
             </result>
@@ -78,6 +82,13 @@
             <result name="success" type="json">
             	<param name="root">content</param>
             </result>
+            <result name="fail">/error.jsp</result>
+        </action>
+    </package>
+    
+    <package name="notice" namespace="/" extends="struts-default,json-default">
+    	<action name="notice" class="com.shetai.web.NoticeAction">
+            <result name="success">/mainPage.jsp</result>
             <result name="fail">/error.jsp</result>
         </action>
     </package>

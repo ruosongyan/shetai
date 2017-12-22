@@ -35,7 +35,7 @@ public class PhotoDaoImpl extends BaseDaoImpl<Photo> implements PhotoDao{
 	    HttpServletRequest request = ServletActionContext.getRequest();
 	    String root = request.getRealPath("/shetai_image");//图片要上传到的服务器路径
 	    root = root+"\\"+userid;
-	      System.out.println("root："+root);
+	    System.out.println("root："+root);
 	    String fileName="";
 	    fileName=getRandomString(20);
 	    picPath=userid+"\\"+fileName;//图片保存到数据库的路径

@@ -4,11 +4,13 @@ import java.util.List;
 
 import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.shetai.entity.User;
 import com.shetai.service.UserService;
 import com.shetai.utils.Utils;
 
+@Repository
 public class LoginAction extends BaseAction{
 	@Autowired
 	private UserService userService;
