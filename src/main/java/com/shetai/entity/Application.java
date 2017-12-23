@@ -5,10 +5,10 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="user")
-public class User {
+@Table(name="application")
+public class Application {
 	@Id
-	private String uid;
+	private String aid;
 	private String uname;
 	private Integer gender;
 	private Integer age;
@@ -18,12 +18,11 @@ public class User {
 	private Integer type;      //用户类型（0表示用户，1表示医生）
 	private String account;
 	private String passwd;
-	
-	public String getUid() {
-		return uid;
+	public String getAid() {
+		return aid;
 	}
-	public void setUid(String uid) {
-		this.uid = uid;
+	public void setAid(String aid) {
+		this.aid = aid;
 	}
 	public String getUname() {
 		return uname;
@@ -43,6 +42,12 @@ public class User {
 	public void setAge(Integer age) {
 		this.age = age;
 	}
+	public String getJob() {
+		return job;
+	}
+	public void setJob(String job) {
+		this.job = job;
+	}
 	public String getMedical_history() {
 		return medical_history;
 	}
@@ -55,6 +60,12 @@ public class User {
 	public void setSymptom(String symptom) {
 		this.symptom = symptom;
 	}
+	public Integer getType() {
+		return type;
+	}
+	public void setType(Integer type) {
+		this.type = type;
+	}
 	public String getAccount() {
 		return account;
 	}
@@ -66,17 +77,5 @@ public class User {
 	}
 	public void setPasswd(String passwd) {
 		this.passwd = passwd;
-	}
-	public Integer getType() {
-		return type;
-	}
-	public void setType(Integer type) {
-		this.type = type;
-	}
-	public String getJob() {
-		return job;
-	}
-	public void setJob(String job) {
-		this.job = job;
 	}
 }

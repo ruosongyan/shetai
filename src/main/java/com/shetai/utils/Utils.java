@@ -24,6 +24,9 @@ public class Utils {
 		return UUID.randomUUID().toString().replaceAll("-", "");
 	}
 	
+	public static boolean isEmpty(String str) {
+		return true;
+	}
 	public static DetailBean messageToDetailBean(Message message) {
 		DetailBean detailBean=new DetailBean();
 		detailBean.setPid(message.getPid());

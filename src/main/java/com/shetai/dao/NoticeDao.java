@@ -1,5 +1,5 @@
 package com.shetai.dao;
 
-public class test {
+public interface NoticeDao {
 
 }

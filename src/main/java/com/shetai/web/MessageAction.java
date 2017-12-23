@@ -6,18 +6,26 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.shetai.entity.DetailBean;
 import com.shetai.entity.Message;
+import com.shetai.entity.Notice;
+import com.shetai.entity.NoticeBean;
 import com.shetai.entity.Photo;
+import com.shetai.entity.SymptomType;
 import com.shetai.entity.User;
 import com.shetai.service.MessageService;
+import com.shetai.service.NoticeService;
 import com.shetai.service.PhotoService;
+import com.shetai.service.SymptomTypeService;
 import com.shetai.service.UserService;
 import com.shetai.utils.Utils;
 
+@Repository
 public class MessageAction extends BaseAction{
 	@Autowired
 	private MessageService messageService;
@@ -25,19 +33,29 @@ public class MessageAction extends BaseAction{
 	private PhotoService photoService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private SymptomTypeService symptomTypeService;
+	@Autowired
+	private NoticeService noticeService;
+	
+	private ArrayList<NoticeBean> noticeList;
 	private String content;
 	private String pid;
 	private String sender_id;
 	private String receive_id;
 	private String pic_path;
+	private int time;
+	private Date date;
 
 
 	private ArrayList<DetailBean> detailList;
+	private ArrayList<String> typeList;
+	private ArrayList<String> photoList;
 	
 	public String execute() {
 		HttpServletRequest reqeust= ServletActionContext.getRequest();  
 		pid=reqeust.getParameter("id");
-		System.out.println(pid);
+		//回复信息
 		Message message = new Message();
 		message.setPid(pid);
 		ArrayList<Message> list=(ArrayList<Message>) messageService.query("Message",message);
@@ -64,10 +82,48 @@ public class MessageAction extends BaseAction{
 			detailBean.setReceive_type(rtype);
 			detailList.add(detailBean);
 		}
+		//图片信息
 		Photo p = photoService.getPhoto(pid);
 		pic_path = p.getPosition();
-		System.out.println(pic_path);
-				
+		time=p.getTime();
+		date=p.getUpload_date();
+		typeList=new ArrayList<String>();
+		String typeStr=p.getTid();
+		if(StringUtils.isNotEmpty(typeStr)) {
+			String[] typeArray=typeStr.split(",");
+			for(String t:typeArray) {
+				SymptomType entity=new SymptomType();
+				entity.setTid(t);
+				SymptomType st=symptomTypeService.query("SymptomType", entity).get(0);
+				if(st!=null) {
+					typeList.add(st.getTname());
+				}
+			}
+		}
+		photoList=new ArrayList<String>();
+		String photoStr=p.getPosition();
+		if(StringUtils.isNotEmpty(photoStr)) {
+			String[] photoArray=photoStr.split(",");
+			for(String photo:photoArray) {
+				photoList.add(photo);
+			}
+		}
+		//Notice
+		List<Notice> nlist=noticeService.query("Notice");
+		noticeList=new ArrayList<NoticeBean>();
+		for(Notice n:nlist) {
+			NoticeBean bean=new NoticeBean();
+			bean.setContent(n.getContent());
+			bean.setDate(n.getDate());
+			bean.setTitle(n.getTitle());
+			User entity=new User();
+			entity.setUid(n.getUid());
+			User user=userService.query("User", entity).get(0);
+			if(user!=null) {
+				bean.setUname(user.getUname());
+			}
+			noticeList.add(bean);
+		}
 		return "success";
 	}
 	
@@ -142,5 +198,55 @@ public class MessageAction extends BaseAction{
 
 	public void setPic_path(String pic_path) {
 		this.pic_path = pic_path;
+	}
+
+
+	public int getTime() {
+		return time;
+	}
+
+
+	public void setTime(int time) {
+		this.time = time;
+	}
+
+
+	public Date getDate() {
+		return date;
+	}
+
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+
+	public ArrayList<String> getTypeList() {
+		return typeList;
+	}
+
+
+	public void setTypeList(ArrayList<String> typeList) {
+		this.typeList = typeList;
+	}
+
+
+	public ArrayList<String> getPhotoList() {
+		return photoList;
+	}
+
+
+	public void setPhotoList(ArrayList<String> photoList) {
+		this.photoList = photoList;
+	}
+
+
+	public ArrayList<NoticeBean> getNoticeList() {
+		return noticeList;
+	}
+
+
+	public void setNoticeList(ArrayList<NoticeBean> noticeList) {
+		this.noticeList = noticeList;
 	}
 }
