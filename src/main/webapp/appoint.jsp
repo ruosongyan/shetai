@@ -51,9 +51,6 @@
   background-size:100% 100%;
   z-index:1;
   }
-  .upload-container:hover{
-    background-image:url(<%= request.getContextPath() %>/staticfile/img/addpic_hover.png);
-    }
   .uploadinput {
     position:relative;
     width: 100%;
@@ -175,8 +172,8 @@
 		<hr class="star-dark mb-5">
     		<form id="appointform" method="post" action="upload" enctype="multipart/form-data">
     		<div id="picture_show" data-picnum="0" data-picpos=[1,2,3]>
-	 		<input name="" class="invisible" value=""/>
-	 		<input name="" class="invisible" value=""/>
+    			<input id="picnum" value="" name="picnum" style="display:none;"/>
+    			<input id="picpos" value="" name="picpos" style="display:none;"/>
 			<div id="upload-container1" class="upload-container" >
 				<input id="uploadinput1" class="uploadinput" type="file" name="file1" value="file" onchange="imgPreview(this,1)" >
 				<a href="#" onclick="deletepic(1)"><img id="delete1" src="<%= request.getContextPath() %>/staticfile/img/delete.png" class="delete" /></a>
@@ -256,7 +253,7 @@
     <!-- Contact Form JavaScript -->
     <script src="<%= request.getContextPath() %>/staticfile/js/jqBootstrapValidation.js"></script>
     <script src="<%= request.getContextPath() %>/staticfile/js/contact_me.js"></script>
-<<<<<<< HEAD
+    
     <script type="text/javascript">
   function	deletepic(num){
 	  var pos = 0;
@@ -300,9 +297,6 @@
 	  var thirdDiv = $divs.eq(2);
       var picnum = picshow.data('picnum');
       var picpos = picshow.data('picpos');
-=======
-    <script src="<%= request.getContextPath() %>/staticfile/js/notice.js"></script>
->>>>>>> branch 'master' of https://github.com/ruosongyan/shetai.git
 
 	  if(pos==0){
 	    thirdDiv.after(firstDiv);
@@ -342,14 +336,25 @@
 
 	}
   function	checkSubmit(){
-	  alert("上传成功！");
+	  
 	  var picshow = $('#picture_show');
       var picpos = picshow.data('picpos');
       var picnum = picshow.data('picnum');
       
-      
+      if(picnum==0){
+    	  alert("图片不能为空！");
+    	  return;
+      }
+	  alert("上传成功！");
+	  alert("picnum:   "+picnum);
+	  alert("picpos:   "+picpos);
+
+	  var str="";
+	  str+=picpos[0]+','+picpos[1]+','+picpos[2];
+	  $('#picnum').val(picnum);
+	  $('#picpos').val(str);
 	  
-	  document.getElementById("appointform").submit();
+ 	  document.getElementById("appointform").submit();
   }
   function imgPreview(fileDom,num){
         //判断是否支持FileReader
@@ -372,11 +377,12 @@
             var img = document.getElementById("upload-container"+num);
             //图片路径设置为读取的图片
             img.style.backgroundImage="url("+ e.target.result +")";
+            
             var picshow = $('#picture_show');
             var picpos = picshow.data('picpos');
             var next_id = 0;
             var pos = 0;
-            for(i=0;i<picpos.length;i++){
+            for(var i=0;i<picpos.length;i++){
         	  	if(num==picpos[i]){
         	  		pos=i;
         	  	}
@@ -405,6 +411,5 @@
         reader.readAsDataURL(file);
     }
 </script>
-  </div>
 </body>
 </html>

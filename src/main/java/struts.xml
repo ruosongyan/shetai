@@ -40,7 +40,7 @@
     </package> 
     
     <package name="photo" namespace="/" extends="json-default">
-    	<action name="list" class="com.shetai.web.PhotoAction">
+    		<action name="list" class="com.shetai.web.PhotoAction">
         		<result name="success">/list.jsp</result>
         		<result name="fail"></result>
         </action>
@@ -62,7 +62,7 @@
         </action>
         
         <action name="editPhoto" class="com.shetai.web.PhotoAction" method="editPhoto">
-        		<result name="success">/edit.jsp</result>
+        		<result name="success" type="chain">list</result>
         		<result name="fail"></result>
         </action>
         
